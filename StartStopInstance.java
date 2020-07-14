@@ -5,11 +5,18 @@
  */
 package com.mycompany.aws_startstop;
 
+import com.amazonaws.services.ec2.AmazonEC2;
+import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
+import com.amazonaws.services.ec2.model.DryRunResult;
+import com.amazonaws.services.ec2.model.DryRunSupportedRequest;
+import com.amazonaws.services.ec2.model.StartInstancesRequest;
+import com.amazonaws.services.ec2.model.StopInstancesRequest;
 
 /**
  *
  * @author sunayanasattaru
  */
+
 public class StartStopInstance {
     public static void startInstance(String instance_id) {
         final AmazonEC2 ec2 = AmazonEC2ClientBuilder.defaultClient();
@@ -71,7 +78,7 @@ public class StartStopInstance {
         final String USAGE =
             "To run this example, supply an instance id and start or stop\n" +
             "Ex: StartStopInstance <instance-id> <start|stop>\n";
-
+        
         if (args.length != 1) {
             System.out.println(USAGE);
             System.exit(1);
