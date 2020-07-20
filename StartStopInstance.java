@@ -5,8 +5,12 @@
  */
 package com.mycompany.aws_startstop;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
+import static com.amazonaws.services.ec2.AmazonEC2ClientBuilder.standard;
 import com.amazonaws.services.ec2.model.DryRunResult;
 import com.amazonaws.services.ec2.model.DryRunSupportedRequest;
 import com.amazonaws.services.ec2.model.StartInstancesRequest;
@@ -19,24 +23,11 @@ import com.amazonaws.services.ec2.model.StopInstancesRequest;
 
 public class StartStopInstance {
     public static void startInstance(String instance_id) {
-        final AmazonEC2 ec2 = AmazonEC2ClientBuilder.defaultClient();
-
-        DryRunSupportedRequest < StartInstancesRequest > dry_request =
-            () -> {
-            StartInstancesRequest request = new StartInstancesRequest()
-                .withInstanceIds(instance_id);
-
-            return request.getDryRunRequest();
-        };
-
-        DryRunResult dry_response = ec2.dryRun(dry_request);
-
-        if(!dry_response.isSuccessful()) {
-            System.out.printf(
-                "Failed dry run to start instance %s", instance_id);
-
-            throw dry_response.getDryRunResponse();
-        }
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials("ABC", "XYZ");
+        final AmazonEC2 ec2 = AmazonEC2ClientBuilder.standard()
+                        .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+                        .withRegion(Regions.US_EAST_1)
+                        .build();
 
         StartInstancesRequest request = new StartInstancesRequest()
             .withInstanceIds(instance_id);
@@ -46,25 +37,12 @@ public class StartStopInstance {
         System.out.printf("Successfully started instance %s", instance_id);
     }
 
-    public static void stopInstance(String instance_id)
-    {
-        final AmazonEC2 ec2 = AmazonEC2ClientBuilder.defaultClient();
-
-        DryRunSupportedRequest < StopInstancesRequest > dry_request =
-            () -> {
-            StopInstancesRequest request = new StopInstancesRequest()
-                .withInstanceIds(instance_id);
-
-            return request.getDryRunRequest();
-        };
-
-        DryRunResult dry_response = ec2.dryRun(dry_request);
-
-        if(!dry_response.isSuccessful()) {
-            System.out.printf(
-                "Failed dry run to stop instance %s", instance_id);
-            throw dry_response.getDryRunResponse();
-        }
+    public static void stopInstance(String instance_id) {
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials("ABC", "XYZ");
+        final AmazonEC2 ec2 = AmazonEC2ClientBuilder.standard()
+                        .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+                        .withRegion(Regions.US_EAST_1)
+                        .build();
 
         StopInstancesRequest request = new StopInstancesRequest()
             .withInstanceIds(instance_id);
@@ -73,28 +51,18 @@ public class StartStopInstance {
 
         System.out.printf("Successfully stop instance %s", instance_id);
     }
-
+    
     public static void main(String[] args) {
         final String USAGE =
             "To run this example, supply an instance id and start or stop\n" +
             "Ex: StartStopInstance <instance-id> <start|stop>\n";
-        
-        if (args.length != 1) {
-            System.out.println(USAGE);
-            System.exit(1);
-        }
 
-        String instance_id = args[0];
+        String instance_id = "i-000920ec7bc924c4b";
 
         boolean start;
 
-        if(args[1].equals("start")) {
-            start = true;
-        } 
-        else {
-            start = false;
-        }
-
+        start = false;
+                
         if(start) {
             startInstance(instance_id);
         } 
