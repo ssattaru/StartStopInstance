@@ -57,7 +57,7 @@ public class StartStopInstance {
             "To run this example, supply an instance id and start or stop\n" +
             "Ex: StartStopInstance <instance-id> <start|stop>\n";
 
-        String instance_id = "i-000920ec7bc924c4b";
+        String instance_id = "ABCXYZ";
 
         boolean start;
 
