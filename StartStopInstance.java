@@ -15,6 +15,7 @@ import com.amazonaws.services.ec2.model.DryRunResult;
 import com.amazonaws.services.ec2.model.DryRunSupportedRequest;
 import com.amazonaws.services.ec2.model.StartInstancesRequest;
 import com.amazonaws.services.ec2.model.StopInstancesRequest;
+import java.util.Scanner;
 
 /**
  *
@@ -23,7 +24,7 @@ import com.amazonaws.services.ec2.model.StopInstancesRequest;
 
 public class StartStopInstance {
     public static void startInstance(String instance_id) {
-        BasicAWSCredentials awsCreds = new BasicAWSCredentials("ABC", "XYZ");
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAVCMKIJNMBOVCUBF6", "EB/2Rid2asAcPbyXhkRCmhoEl++IKcO6U60G7tnO");
         final AmazonEC2 ec2 = AmazonEC2ClientBuilder.standard()
                         .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
                         .withRegion(Regions.US_EAST_1)
@@ -38,7 +39,7 @@ public class StartStopInstance {
     }
 
     public static void stopInstance(String instance_id) {
-        BasicAWSCredentials awsCreds = new BasicAWSCredentials("ABC", "XYZ");
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAVCMKIJNMBOVCUBF6", "EB/2Rid2asAcPbyXhkRCmhoEl++IKcO6U60G7tnO");
         final AmazonEC2 ec2 = AmazonEC2ClientBuilder.standard()
                         .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
                         .withRegion(Regions.US_EAST_1)
@@ -57,16 +58,17 @@ public class StartStopInstance {
             "To run this example, supply an instance id and start or stop\n" +
             "Ex: StartStopInstance <instance-id> <start|stop>\n";
 
-        String instance_id = "ABCXYZ";
-
-        boolean start;
-
-        start = false;
-                
-        if(start) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter instance_id: ");
+        String instance_id = input.nextLine();  // i-000920ec7bc924c4b
+        
+        System.out.println("Enter true or false to start instance_id:");
+        boolean startStop = input.nextBoolean();
+                        
+        // false = stop instance & true = start        
+        if(startStop == true) {
             startInstance(instance_id);
-        } 
-        else {
+        } else {
             stopInstance(instance_id);
         }
     }
