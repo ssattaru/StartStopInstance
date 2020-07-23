@@ -24,7 +24,7 @@ import java.util.Scanner;
 
 public class StartStopInstance {
     public static void startInstance(String instance_id) {
-        BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAVCMKIJNMBOVCUBF6", "EB/2Rid2asAcPbyXhkRCmhoEl++IKcO6U60G7tnO");
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials("ABC", "XYZ");
         final AmazonEC2 ec2 = AmazonEC2ClientBuilder.standard()
                         .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
                         .withRegion(Regions.US_EAST_1)
@@ -39,7 +39,7 @@ public class StartStopInstance {
     }
 
     public static void stopInstance(String instance_id) {
-        BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAVCMKIJNMBOVCUBF6", "EB/2Rid2asAcPbyXhkRCmhoEl++IKcO6U60G7tnO");
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials("ABC", "XYZ");
         final AmazonEC2 ec2 = AmazonEC2ClientBuilder.standard()
                         .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
                         .withRegion(Regions.US_EAST_1)
@@ -60,7 +60,7 @@ public class StartStopInstance {
 
         Scanner input = new Scanner(System.in);
         System.out.println("Enter instance_id: ");
-        String instance_id = input.nextLine();  // i-000920ec7bc924c4b
+        String instance_id = input.nextLine();  
         
         System.out.println("Enter true or false to start instance_id:");
         boolean startStop = input.nextBoolean();
